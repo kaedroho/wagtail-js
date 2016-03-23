@@ -1,0 +1,9 @@
+{
+  "name": "wagtail",
+  "version": "1.0.0",
+  "description": "Wagtail API client",
+  "license": "BSD",
+  "devDependencies": {
+    "typescript": "^1.8.9"
+  }
+}
