@@ -4,7 +4,7 @@ import {DocumentQuery} from './query/documents';
 
 
 export default class Wagtail {
-    constructor(private baseUrl: string) {
+    constructor(public baseUrl: string) {
     }
 
     get pages(): PageQuery {

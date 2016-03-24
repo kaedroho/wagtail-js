@@ -12,5 +12,7 @@ export interface Document {
 
 
 export class DocumentQuery extends Query<Document> {
-
+    get endpointUrl() {
+        return this.wagtail.baseUrl + '/documents/';
+    }
 }

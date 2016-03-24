@@ -11,5 +11,7 @@ export interface Image {
 
 
 export class ImageQuery extends Query<Image> {
-
+    get endpointUrl() {
+        return this.wagtail.baseUrl + '/images/';
+    }
 }

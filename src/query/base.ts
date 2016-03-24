@@ -11,11 +11,31 @@ export class Query<Item> {
     public filters: {} = {};
     public searchQuery: string = null;
 
-    constructor(private wagtail: Wagtail) {
+    constructor(public wagtail: Wagtail) {
+    }
+
+    get endpointUrl() {
+        return this.wagtail.baseUrl;
     }
 
     fetch(offset: number = 0, limit: number = 20): Promise<Results<Item>> {
-        return;
+        let params = {
+            offset: offset,
+            limit: limit
+        };
+
+        let query = Object.keys(params).reduce(function(a,k){a.push(k+'='+encodeURIComponent(params[k]));return a},[]).join('&');
+
+        return new Promise<Results<Item>>((resolve, reject) => {
+            fetch(this.endpointUrl + '?' + query).then((response) => {
+                response.json().then((data) => {
+                    resolve({
+                        totalCount: data.meta.total_count,
+                        items: data.items || data.pages || data.images || data.documents
+                    });
+                });
+            });
+        });
     }
 
     fetchCount(): Promise<number> {

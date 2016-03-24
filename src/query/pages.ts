@@ -12,5 +12,7 @@ export interface Page {
 
 
 export class PageQuery extends Query<Page> {
-
+    get endpointUrl() {
+        return this.wagtail.baseUrl + '/pages/';
+    }
 }
