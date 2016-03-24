@@ -43,7 +43,10 @@ export class Query<Item> {
     }
 
     private clone(): Query<Item> {
-        return Object.assign(<Query<Item>>{}, this);
+        const clone = new Query<Item>(this.wagtail);
+        clone.filters = this.filters;
+        clone.searchQuery = this.searchQuery;
+        return clone;
     }
 
     filter(filters: {}): Query<Item> {
