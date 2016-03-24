@@ -1,34 +1,30 @@
-import {PageEndpoint} from './endpoints/pages';
-import {ImageEndpoint} from './endpoints/images';
-import {DocumentEndpoint} from './endpoints/documents';
+import {PageQuery} from './query/pages';
+import {ImageQuery} from './query/images';
+import {DocumentQuery} from './query/documents';
 
 
 export default class Wagtail {
     constructor(private baseUrl: string) {
     }
 
-    get pages(): PageEndpoint {
-        return new PageEndpoint(this);
+    get pages(): PageQuery {
+        return new PageQuery(this);
     }
 
-    get images(): ImageEndpoint {
-        return new ImageEndpoint(this);
+    get images(): ImageQuery {
+        return new ImageQuery(this);
     }
 
-    get documents(): DocumentEndpoint {
-        return new DocumentEndpoint(this);
+    get documents(): DocumentQuery {
+        return new DocumentQuery(this);
     }
 }
 
 
 let test = new Wagtail("http://wagtail-admin-api.demo.torchboxapps.com/api/v1/");
 
-test.pages.getById(1).then((page) => {
-    page.meta.type
+test.pages.filter({'field': 'value'}).search("Test").fetch().then((results) => {
+    for (let page of results.items) {
+        page.id;
+    }
 });
-
-test.pages.countAll();
-
-test.pages.all()
-test.pages.getBySlug("test");
-test.pages.all().filter({title: "test"}).search("Hello");

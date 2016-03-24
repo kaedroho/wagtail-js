@@ -1,4 +1,4 @@
-import {BaseEndpoint} from './base';
+import {Query} from './base';
 
 
 export interface Image {
@@ -10,6 +10,6 @@ export interface Image {
 }
 
 
-export class ImageEndpoint extends BaseEndpoint<Image> {
+export class ImageQuery extends Query<Image> {
 
 }

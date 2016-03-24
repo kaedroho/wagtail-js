@@ -1,4 +1,4 @@
-import {BaseEndpoint} from './base';
+import {Query} from './base';
 
 
 export interface Document {
@@ -11,6 +11,6 @@ export interface Document {
 }
 
 
-export class DocumentEndpoint extends BaseEndpoint<Document> {
+export class DocumentQuery extends Query<Document> {
 
 }
