@@ -19,12 +19,3 @@ export default class Wagtail {
         return new DocumentQuery(this);
     }
 }
-
-
-let test = new Wagtail("http://wagtail-admin-api.demo.torchboxapps.com/api/v1/");
-
-test.pages.filter({'field': 'value'}).search("Test").fetch().then((results) => {
-    for (let page of results.items) {
-        page.id;
-    }
-});
