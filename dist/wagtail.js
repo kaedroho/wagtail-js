@@ -13,10 +13,32 @@ var Wagtail = (function () {
             this.filters = {};
             this.searchQuery = null;
         }
+        Object.defineProperty(Query.prototype, "endpointUrl", {
+            get: function () {
+                return this.wagtail.baseUrl;
+            },
+            enumerable: true,
+            configurable: true
+        });
         Query.prototype.fetch = function (offset, limit) {
+            var _this = this;
             if (offset === void 0) { offset = 0; }
             if (limit === void 0) { limit = 20; }
-            return;
+            var params = {
+                offset: offset,
+                limit: limit
+            };
+            var query = Object.keys(params).reduce(function (a, k) { a.push(k + '=' + encodeURIComponent(params[k])); return a; }, []).join('&');
+            return new Promise(function (resolve, reject) {
+                fetch(_this.endpointUrl + '?' + query).then(function (response) {
+                    response.json().then(function (data) {
+                        resolve({
+                            totalCount: data.meta.total_count,
+                            items: data.items || data.pages || data.images || data.documents
+                        });
+                    });
+                });
+            });
         };
         Query.prototype.fetchCount = function () {
             var _this = this;
@@ -43,7 +65,10 @@ var Wagtail = (function () {
             });
         };
         Query.prototype.clone = function () {
-            return Object.assign({}, this);
+            var clone = new Query(this.wagtail);
+            clone.filters = this.filters;
+            clone.searchQuery = this.searchQuery;
+            return clone;
         };
         Query.prototype.filter = function (filters) {
             var clone = this.clone();
@@ -63,6 +88,13 @@ var Wagtail = (function () {
         function PageQuery() {
             _super.apply(this, arguments);
         }
+        Object.defineProperty(PageQuery.prototype, "endpointUrl", {
+            get: function () {
+                return this.wagtail.baseUrl + '/pages/';
+            },
+            enumerable: true,
+            configurable: true
+        });
         return PageQuery;
     }(Query));
 
@@ -71,6 +103,13 @@ var Wagtail = (function () {
         function ImageQuery() {
             _super.apply(this, arguments);
         }
+        Object.defineProperty(ImageQuery.prototype, "endpointUrl", {
+            get: function () {
+                return this.wagtail.baseUrl + '/images/';
+            },
+            enumerable: true,
+            configurable: true
+        });
         return ImageQuery;
     }(Query));
 
@@ -79,6 +118,13 @@ var Wagtail = (function () {
         function DocumentQuery() {
             _super.apply(this, arguments);
         }
+        Object.defineProperty(DocumentQuery.prototype, "endpointUrl", {
+            get: function () {
+                return this.wagtail.baseUrl + '/documents/';
+            },
+            enumerable: true,
+            configurable: true
+        });
         return DocumentQuery;
     }(Query));
 
@@ -109,13 +155,6 @@ var Wagtail = (function () {
         });
         return Wagtail;
     }());
-    var test = new Wagtail("http://wagtail-admin-api.demo.torchboxapps.com/api/v1/");
-    test.pages.filter({ 'field': 'value' }).search("Test").fetch().then(function (results) {
-        for (var _i = 0, _a = results.items; _i < _a.length; _i++) {
-            var page = _a[_i];
-            page.id;
-        }
-    });
 
     return Wagtail;
 
