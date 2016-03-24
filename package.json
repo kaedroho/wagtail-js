@@ -4,6 +4,9 @@
   "description": "Wagtail API client",
   "license": "BSD",
   "devDependencies": {
-    "typescript": "^1.8.9"
+    "gulp": "^3.9.1",
+    "gulp-rollup": "^1.8.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "rollup-plugin-typescript": "^0.6.0",
   }
 }
