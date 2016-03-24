@@ -17,11 +17,11 @@
     "filesGlob": [
         "**/*.ts",
         "**/*.tsx",
-        "!node_modules/**"
+        "!node_modules/**",
+        "!dist/**"
     ],
     "files": [
         "src/main.ts",
-        "src/query.ts",
         "src/query/base.ts",
         "src/query/documents.ts",
         "src/query/images.ts",
