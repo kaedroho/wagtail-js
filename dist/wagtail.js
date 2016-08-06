@@ -159,4 +159,3 @@ var Wagtail = (function () {
     return Wagtail;
 
 }());
-//# sourceMappingURL=wagtail.js.map

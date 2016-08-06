@@ -1,30 +1,39 @@
 var gulp = require('gulp');
-var sourcemaps = require('gulp-sourcemaps');
-var rollup = require('gulp-rollup');
+var rollup = require('rollup-stream');
 var typescript = require('rollup-plugin-typescript');
 var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
+var source = require('vinyl-source-stream');
+var streamify = require('gulp-streamify')
 
 
 gulp.task('default', function() {
-    return gulp.src('src/main.ts')
-        .pipe(sourcemaps.init())
-        .pipe(rollup({
+    return rollup({
+            entry: 'src/main.ts',
             format: 'iife',
             moduleName: 'Wagtail',
             plugins: [
-                typescript()
+                typescript({
+                    typescript: require('typescript')
+                }),
             ]
-        }))
-        .pipe((rename('wagtail.js')))
-        .pipe(sourcemaps.write('.'))
+        })
+        .pipe(source('wagtail.js'))
         .pipe(gulp.dest('dist'));
 });
 
 
 gulp.task('dist', ['default'], function() {
-    return gulp.src('dist/wagtail.js')
-        .pipe(uglify())
-        .pipe((rename('wagtail.min.js')))
+    return rollup({
+            entry: 'src/main.ts',
+            format: 'iife',
+            moduleName: 'Wagtail',
+            plugins: [
+                typescript({
+                    typescript: require('typescript')
+                }),
+            ]
+        })
+        .pipe(source('wagtail.min.js'))
+        .pipe(streamify(uglify()))
         .pipe(gulp.dest('dist'));
 });

@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es5",
         "module": "commonjs",
         "moduleResolution": "node",
         "isolatedModules": false,
@@ -25,10 +25,7 @@
         "src/query/base.ts",
         "src/query/documents.ts",
         "src/query/images.ts",
-        "src/query/pages.ts",
-        "typings/es6-promise/es6-promise.d.ts",
-        "typings/tsd.d.ts",
-        "typings/whatwg-fetch/whatwg-fetch.d.ts"
+        "src/query/pages.ts"
     ],
     "exclude": []
 }
